@@ -8,9 +8,9 @@
 class Solution
 {
 public:
-    void findCombination(int ind, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
+    void f(vector<vector<int>> &ans, vector<int> &ds, int ind, int target, vector<int> &nums)
     {
-        if (ind == arr.size())
+        if (ind == nums.size())
         {
             if (target == 0)
             {
@@ -18,21 +18,20 @@ public:
             }
             return;
         }
-        // pick up the element
-        if (arr[ind] <= target)
+        if (nums[ind] <= target)
         {
-            ds.push_back(arr[ind]);
-            findCombination(ind, target - arr[ind], arr, ans, ds);
+            ds.push_back(nums[ind]);
+            f(ans, ds, ind, target - nums[ind], nums);
             ds.pop_back();
         }
 
-        findCombination(ind + 1, target, arr, ans, ds);
+        f(ans, ds, ind + 1, target, nums);
     }
     vector<vector<int>> combinationSum(vector<int> &candidates, int target)
     {
         vector<vector<int>> ans;
         vector<int> ds;
-        findCombination(0, target, candidates, ans, ds);
+        f(ans, ds, 0, target, candidates);
         return ans;
     }
 };
